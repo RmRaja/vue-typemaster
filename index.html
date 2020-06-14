@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue-TypeMaster</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/locales/en_GB/faker.en_GB.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
       integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="_styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="_styles.css" />
+  </head>
+  <body>
     <div id="app">
-       <p>Username : {{ username }}</p>
+      <button
+        @click="showSettingsMenu = !showSettingsMenu"
+        class="settings-btn"
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+      <transition name="fade">
+        <div class="settings" v-if="showSettingsMenu">
+          <form>
+            <div>
+              <label for="difficulty">Difficulty</label>
+              <select v-model="difficulty" @change="startNewGame">
+                <option value="names">Names</option>
+                <option value="streetName">Street Name</option>
+                <option value="product">Product</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </transition>
+      <div class="container">
+        <h2>Typing Master...</h2>
+        <small>Type the following:</small>
+        <h1 v-text="word"></h1>
+        <input
+          type="text"
+          v-model="text"
+          autocomplete="off"
+          :readonly="!isGameRunning"
+          @keyup="checkWordMatch"
+          placeholder="Type the word here..."
+        />
+        <div v-if="!isGameRunning">
+          <p >Game Over !</p>
+          <button @click="startNewGame">New Game ?</button>
+        </div>
+        <p class="time-container">Time left: <span v-text="time">10</span>s</p>
+        <p class="score-container">Score: <span v-text="score">0</span></p>
+      </div>
     </div>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
