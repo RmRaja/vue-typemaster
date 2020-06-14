@@ -1,5 +1,5 @@
 <div align="center">
-  <h5> Vue Typing Master</h5>
+  <h3> Vue Typing Master</h3>
 </div>
 <p align="center">
 <img src="Vue-TypingMaster.gif"  />
